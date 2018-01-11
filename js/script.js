@@ -28,7 +28,38 @@ var lnIcon = L.icon({
 });
 
 //子ども食堂のピンを追加 childrencafeteria:cc
-var cc1 = L.marker([34.392487, 132.475126], { icon: ccIcon }).bindPopup('<table>hogehoge</table><br><a href="https://www.facebook.com/tunago.p/" target="_blank">青い鳥</a><br><a href="https://maps.google.co.jp/maps?ll=34.392487,132.475126&f=d" target="_blank">ここまでの経路</a>'),
+var cc1 = L.marker([34.392487, 132.475126], { icon: ccIcon }).bindPopup('
+<table class="company">
+<tbody>
+    <tr>
+        <th class="arrow_box">会社名</div></th>
+        <td>株式会社LIG</td>
+    </tr>
+    <tr>
+        <th class="arrow_box">所在地</th>
+        <td>
+            〒110-0015<br>
+            東京都台東区東上野2-18-7 共同ビル 10F
+        </td>
+    </tr>
+    <tr>
+        <th>TEL</th>
+        <td>
+            03-6240-1253
+        </td>
+    </tr>
+    <tr>
+        <th>事業内容</th>
+        <td>
+            ウェブサイト制作事業<br>
+            （企画、マーケティング、デザイン制作、システム開発）<br>
+            自社メディア運用事業<br>
+            プロモーション・コンテンツ企画制作事業
+        </td>
+    </tr>
+</tbody>
+</table>
+<br><a href="https://www.facebook.com/tunago.p/" target="_blank">青い鳥</a><br><a href="https://maps.google.co.jp/maps?ll=34.392487,132.475126&f=d" target="_blank">ここまでの経路</a>'),
     cc2 = L.marker([34.361050, 132.463745], { icon: ccIcon }).bindPopup('<a href="https://www.facebook.com/kururi2093/" target="_blank">くるり食堂</a><br><a href="https://maps.google.co.jp/maps?ll=34.361015,132.463743&f=d" target="_blank">ここまでの経路</a>'),
     cc3 = L.marker([34.385509, 132.452631], { icon: ccIcon }).bindPopup('<a href="https://hiroshimaywca.jimdo.com/" target="_blank">わいわい食堂</a><br><a href="https://maps.google.co.jp/maps?ll=34.385509,132.452631&f=d" target="_blank">ここまでの経路</a>');
 

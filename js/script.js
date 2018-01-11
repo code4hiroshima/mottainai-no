@@ -4,7 +4,7 @@
 var ccIcon = L.icon({
     iconUrl: 'img/gohan.png', 
     iconRetinaUrl: 'img/gohan.png',
-    iconSize: [50, 50],
+    iconSize: [40, 40],
     iconAnchor: [12, 25],
     popupAnchor: [0, 0],
 });
@@ -13,7 +13,7 @@ var ccIcon = L.icon({
 var fbIcon = L.icon({
     iconUrl: 'img/foodbank.png', 
     iconRetinaUrl: 'img/foodbank.png',
-    iconSize: [50, 50],
+    iconSize: [40, 40],
     iconAnchor: [12, 25],
     popupAnchor: [0, 0],
 });
@@ -22,7 +22,7 @@ var fbIcon = L.icon({
 var lnIcon = L.icon({
     iconUrl: 'img/loss-non.png', 
     iconRetinaUrl: 'img/loss-non.png',
-    iconSize: [50, 50],
+    iconSize: [40, 40],
     iconAnchor: [12, 25],
     popupAnchor: [0, 0],
 });

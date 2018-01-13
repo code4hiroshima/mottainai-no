@@ -16,3 +16,30 @@ html, body {
     left:0%; 
     z-index: 1;
 }
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: black;
+  border-color: orange;
+}
+
+.leaflet-popup-content,
+a.leaflet-popup-close-button {
+  color: orange !important;
+  font: bold 14pt monospace;
+}
+
+.leaflet-popup-content-wrapper {
+  border-width: 3px;
+  border-style: solid;
+}
+
+.leaflet-popup-tip-container {
+  margin-top: -3px;
+  height: 23px;
+}
+
+.leaflet-popup-tip {
+    border-style: solid;
+    border-width: 0 3px 3px 0;
+}

@@ -20,12 +20,12 @@ html, body {
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
   background: black;
-  border-color: orange;
+  border-color: #f45c42;
 }
 
 .leaflet-popup-content,
 a.leaflet-popup-close-button {
-  color: orange !important;
+  color: #f45c42 !important;
   font: bold 14pt monospace;
 }
 

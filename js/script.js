@@ -1,5 +1,4 @@
 /* eslint no-var: "off" */
-/* eslint one-var: "off" */
 /* eslint comma-dangle: "off" */
 /* eslint indent: "off" */
 /* eslint quote-props: "off" */
@@ -42,9 +41,9 @@ var lnIcon = L.icon({
 // cc2 = L.marker([34.361050, 132.463745], { icon: ccIcon }).bindPopup('<a href="https://www.facebook.com/kururi2093/" target="_blank">くるり食堂</a><br><a href="https://maps.google.co.jp/maps?ll=34.361015,132.463743&f=d" target="_blank">ここまでの経路</a>'),
 // cc3 = L.marker([34.385509, 132.452631], { icon: ccIcon }).bindPopup('<a href="https://hiroshimaywca.jimdo.com/" target="_blank">わいわい食堂</a><br><a href="https://maps.google.co.jp/maps?ll=34.385509,132.452631&f=d" target="_blank">ここまでの経路</a>');
 
-var cc1 = L.marker([34.392487, 132.475126], { icon: ccIcon }).bindPopup('<table border="1"><tr><th>名称</th><td><a href="https://www.facebook.com/tunago.p/" target="_blank">青い鳥</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.392487,132.475126&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>'),
-    cc2 = L.marker([34.361050, 132.463745], { icon: ccIcon }).bindPopup('<table border="1"><tr><th>名称</th><td><a href="https://www.facebook.com/kururi2093/" target="_blank">くるり食堂</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.361015,132.463743&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>'),
-    cc3 = L.marker([34.385509, 132.452631], { icon: ccIcon }).bindPopup('<table border="1"><tr><th>名称</th><td><a href="https://hiroshimaywca.jimdo.com/" target="_blank">わいわい食堂</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.385509,132.452631&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>');
+var cc1 = L.marker([34.392487, 132.475126], { icon: ccIcon }).bindPopup('<table border="1"><tr><th>名称</th><td><a href="https://www.facebook.com/tunago.p/" target="_blank">青い鳥</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.392487,132.475126&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>');
+var cc2 = L.marker([34.361050, 132.463745], { icon: ccIcon }).bindPopup('<table border="1"><tr><th>名称</th><td><a href="https://www.facebook.com/kururi2093/" target="_blank">くるり食堂</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.361015,132.463743&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>');
+var cc3 = L.marker([34.385509, 132.452631], { icon: ccIcon }).bindPopup('<table border="1"><tr><th>名称</th><td><a href="https://hiroshimaywca.jimdo.com/" target="_blank">わいわい食堂</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.385509,132.452631&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>');
 
 // フードバンクのピンを追加 foodbank:fb
 var fb1 = L.marker([34.524403, 132.505580], { icon: fbIcon }).bindPopup('<table border="1"><tr><th>名称</th><td><a href="http://www.aiainet.org/" target="_blank">あいあいねっと</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.524403,132.505580&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>');
@@ -68,10 +67,10 @@ var lossnon = L.layerGroup([
 ]);
 
 var pale = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',
-{ id: 'palemap', attribution: "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>国土地理院</a>" }),
-    blank = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/blank/{z}/{x}/{y}.png',
-{ id: 'blankmap', attribution: "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>国土地理院</a>" }),
-    osm = L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png',
+{ id: 'palemap', attribution: "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>国土地理院</a>" });
+var blank = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/blank/{z}/{x}/{y}.png',
+{ id: 'blankmap', attribution: "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>国土地理院</a>" });
+var osm = L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png',
 { id: 'osmmap', attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' });
 
 var map = L.map('map', {

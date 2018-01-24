@@ -3,7 +3,6 @@
 /* eslint comma-dangle: "off" */
 /* eslint indent: "off" */
 /* eslint quote-props: "off" */
-/* eslint object-curly-spacing: "off" */
 /* eslint function-paren-newline: "off" */
 /* eslint key-spacing: "off" */
 /* eslint quotes: "off" */
@@ -69,9 +68,9 @@ var lossnon = L.layerGroup([
 ]);
 
 var pale = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',
-{id: 'palemap', attribution: "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>国土地理院</a>"}),
+{ id: 'palemap', attribution: "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>国土地理院</a>" }),
     blank = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/blank/{z}/{x}/{y}.png',
-{id: 'blankmap', attribution: "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>国土地理院</a>"}),
+{ id: 'blankmap', attribution: "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>国土地理院</a>" }),
     osm = L.tileLayer('http://tile.openstreetmap.jp/{z}/{x}/{y}.png',
 { id: 'osmmap', attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' });
 

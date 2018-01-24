@@ -3,8 +3,9 @@ module.exports = {
     "env": {
       "browser": true,
     },
-    "plugins": ["compat"],
+    "plugins": ["compat", "prettier"],
     "rules": {
       "compat/compat": "error",
+      "prettier/prettier": "error"
     }
 };

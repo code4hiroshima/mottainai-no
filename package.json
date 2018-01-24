@@ -15,7 +15,9 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-compat": "^2.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "npx": "^9.7.1"
+    "eslint-plugin-prettier": "^2.5.0",
+    "npx": "^9.7.1",
+    "prettier": "1.10.2"
   },
   "browserslist": [
     "last 2 versions",

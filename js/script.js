@@ -4,7 +4,6 @@
 /* eslint quote-props: "off" */
 /* eslint key-spacing: "off" */
 /* eslint quotes: "off" */
-/* eslint comma-spacing: "off" */
 /* global L */
 // var map = L.map('map');
 
@@ -48,7 +47,7 @@ var cc3 = L.marker([34.385509, 132.452631], { icon: ccIcon }).bindPopup('<table 
 var fb1 = L.marker([34.524403, 132.505580], { icon: fbIcon }).bindPopup('<table border="1"><tr><th>名称</th><td><a href="http://www.aiainet.org/" target="_blank">あいあいねっと</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.524403,132.505580&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>');
 
 // 食品ロス削減協力店のピンを追加 lossnon:ln
-var ln1 = L.marker([34.362869,132.468328], { icon: lnIcon }).bindPopup('<table border="1"><tr><th>名称</th><td><a href="http://www.city.hiroshima.lg.jp/www/contents/1498549753659/index.html" target="_blank">イオン宇品店</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.362869,132.468328&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>');
+var ln1 = L.marker([34.362869, 132.468328], { icon: lnIcon }).bindPopup('<table border="1"><tr><th>名称</th><td><a href="http://www.city.hiroshima.lg.jp/www/contents/1498549753659/index.html" target="_blank">イオン宇品店</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.362869,132.468328&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>');
 
 // 子ども食堂のレイヤ
 var childrencafeteria = L.layerGroup([
@@ -79,7 +78,7 @@ var osm = L.tileLayer(
 );
 
 var map = L.map('map', {
-    layers: [osm, childrencafeteria,foodbank,lossnon]
+    layers: [osm, childrencafeteria, foodbank, lossnon]
 });
 
 var baseMaps = {

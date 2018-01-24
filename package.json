@@ -1,0 +1,17 @@
+{
+  "name": "mottainai-no",
+  "version": "0.0.1",
+  "description": "Apps for mottainai NO",
+  "main": "index.js",
+  "repository": "https://github.com/code4hiroshima/mottainai-no",
+  "author": "14H-02390 <kou06ishi16@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint js/**.js"
+  },
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0"
+  }
+}

@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint no-var: "off" */
 /* eslint comma-dangle: "off" */
 /* eslint indent: "off" */

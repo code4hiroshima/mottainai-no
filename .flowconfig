@@ -1,0 +1,14 @@
+[ignore]
+.*/node_modules/config-chain/test/broken.json
+.*/node_modules/npm/node_modules/config-chain/test/broken.json
+.*/node_modules/npx/node_modules/npm/node_modules/config-chain/test/broken.jsok
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+
+[strict]

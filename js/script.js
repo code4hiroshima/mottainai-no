@@ -5,7 +5,11 @@
 /* eslint quote-props: "off" */
 /* eslint key-spacing: "off" */
 /* eslint quotes: "off" */
-/* eslint function-paren-newline: "off" */
+/* eslint function-paren-newline: "off" */ // コードフォーマッターとeslintが競合する
+/* eslint vars-on-top: "off" */ // ESModuleが使えないと消しにくい
+/* eslint prefer-destructuring: "off" */ // babelを利用しないと消せそうにない
+/* eslint spaced-comment: "off" */ // flowの型定義とコードフォーマッターが競合する
+/* eslint prefer-template: "off" */ // babelを利用しないとtemplate literal が利用できない
 /* global L */
 // var map = L.map('map');
 
@@ -41,34 +45,121 @@ var lnIcon = L.icon({
 // cc2 = L.marker([34.361050, 132.463745], { icon: ccIcon }).bindPopup('<a href="https://www.facebook.com/kururi2093/" target="_blank">くるり食堂</a><br><a href="https://maps.google.co.jp/maps?ll=34.361015,132.463743&f=d" target="_blank">ここまでの経路</a>'),
 // cc3 = L.marker([34.385509, 132.452631], { icon: ccIcon }).bindPopup('<a href="https://hiroshimaywca.jimdo.com/" target="_blank">わいわい食堂</a><br><a href="https://maps.google.co.jp/maps?ll=34.385509,132.452631&f=d" target="_blank">ここまでの経路</a>');
 
-var cc1 = L.marker([34.392487, 132.475126], { icon: ccIcon }).bindPopup(
-  '<table border="1"><tr><th>名称</th><td><a href="https://www.facebook.com/tunago.p/" target="_blank">青い鳥</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.392487,132.475126&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>'
-);
-var cc2 = L.marker([34.36105, 132.463745], { icon: ccIcon }).bindPopup(
-  '<table border="1"><tr><th>名称</th><td><a href="https://www.facebook.com/kururi2093/" target="_blank">くるり食堂</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.361015,132.463743&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>'
-);
-var cc3 = L.marker([34.385509, 132.452631], { icon: ccIcon }).bindPopup(
-  '<table border="1"><tr><th>名称</th><td><a href="https://hiroshimaywca.jimdo.com/" target="_blank">わいわい食堂</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.385509,132.452631&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>'
-);
+var ccList /*: ChildrenCafeteria[] */ = [
+  {
+    name: "青い鳥",
+    latitude: 34.392487,
+    longitude: 132.475126,
+    url: "https://www.facebook.com/tunago.p/"
+  },
+  {
+    name: "くるり食堂",
+    latitude: 34.36105,
+    longitude: 132.463745,
+    url: "https://www.facebook.com/kururi2093/"
+  },
+  {
+    name: "わいわい食堂",
+    latitude: 34.385509,
+    longitude: 132.452631,
+    url: "https://hiroshimaywca.jimdo.com/"
+  }
+];
+
+function createMarker(attributes) {
+  var latitude = attributes.latitude;
+  var longitude = attributes.longitude;
+  var mIcon = attributes.icon; // iconにするとフォーマッタにes6形式にされてしまう
+  var popupHtml = attributes.popupHtml;
+  return L.marker([latitude, longitude], { icon: mIcon }).bindPopup(popupHtml);
+}
+
+function createGoogleMapUrl(attributes) {
+  var latitude = attributes.latitude;
+  var longitude = attributes.longitude;
+  // TODO template literalを使いたい
+  return (
+    "https://maps.google.co.jp/maps?q=" +
+    latitude +
+    "," +
+    longitude +
+    "&iwloc=J"
+  );
+}
+
+function createPopupHtml(attributes) {
+  var url = attributes.url;
+  var name = attributes.name;
+  var googleMapUrl = createGoogleMapUrl(attributes);
+  // TODO template literalを使いたい
+  return (
+    '<table border="1"><tr><th>名称</th><td><a href=' +
+    url +
+    'target="_blank">' +
+    name +
+    '</a></td></tr><tr><th>案内</th><td><a href="' +
+    googleMapUrl +
+    '" target="_blank">ここまでの経路</a></td></tr></table>'
+  );
+}
+
+function createChilrdenCafeteriaMarker(
+  cc /*: ChildrenCafeteria */
+) /*: Marker */ {
+  return createMarker({
+    icon: ccIcon,
+    latitude: cc.latitude,
+    longitude: cc.longitude,
+    popupHtml: createPopupHtml(cc)
+  });
+}
 
 // フードバンクのピンを追加 foodbank:fb
-var fb1 = L.marker([34.524403, 132.50558], { icon: fbIcon }).bindPopup(
-  '<table border="1"><tr><th>名称</th><td><a href="http://www.aiainet.org/" target="_blank">あいあいねっと</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.524403,132.505580&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>'
-);
+var fbList /* FoobBank[] */ = [
+  {
+    name: "あいあいねっと",
+    latitude: 34.524403,
+    longitude: 132.50558,
+    url: "http://www.aiainet.org/"
+  }
+];
+
+function createFoodBankMarker(fb /*: FoodBank */) /*: Marker */ {
+  return createMarker({
+    icon: fbIcon,
+    latitude: fb.latitude,
+    longitude: fb.longitude,
+    popupHtml: createPopupHtml(fb)
+  });
+}
 
 // 食品ロス削減協力店のピンを追加 lossnon:ln
-var ln1 = L.marker([34.362869, 132.468328], { icon: lnIcon }).bindPopup(
-  '<table border="1"><tr><th>名称</th><td><a href="http://www.city.hiroshima.lg.jp/www/contents/1498549753659/index.html" target="_blank">イオン宇品店</a></td></tr><tr><th>案内</th><td><a href="https://maps.google.co.jp/maps?q=34.362869,132.468328&iwloc=J" target="_blank">ここまでの経路</a></td></tr></table>'
-);
+var lnList = [
+  {
+    name: "イオン宇品店",
+    latitude: 34.362869,
+    longitude: 132.468328,
+    url: "http://www.city.hiroshima.lg.jp/www/contents/1498549753659/index.html"
+  }
+];
+
+function createLossNonMarker(ln /*: LossNon */) /*: Marker */ {
+  return createMarker({
+    icon: lnIcon,
+    latitude: ln.latitude,
+    longitude: ln.longitude,
+    popupHtml: createPopupHtml(ln)
+  });
+}
 
 // 子ども食堂のレイヤ
-var childrencafeteria = L.layerGroup([cc1, cc2, cc3]);
+var childrencafeteria = L.layerGroup(ccList.map(createChilrdenCafeteriaMarker));
 
 // フードバンクのレイヤ
-var foodbank = L.layerGroup([fb1]);
+var foodbank = L.layerGroup(fbList.map(createFoodBankMarker));
 
 // 食品ロス削減協力店のレイヤ
-var lossnon = L.layerGroup([ln1]);
+var lossnon = L.layerGroup(lnList.map(createLossNonMarker));
 
 var pale = L.tileLayer(
   "http://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",

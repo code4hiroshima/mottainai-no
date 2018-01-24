@@ -1,8 +1,20 @@
+/*eslint spaced-comment: ["error", "never"]*/
+/*eslint no-var: "off"*/
+/*eslint one-var: "off"*/
+/*eslint comma-dangle: "off"*/
+/*eslint indent: "off"*/
+/*eslint quote-props: "off"*/
+/*eslint object-curly-spacing: "off"*/
+/*eslint function-paren-newline: "off"*/
+/*eslint key-spacing: "off"*/
+/*eslint quotes: "off"*/
+/*eslint comma-spacing: "off"*/
+/*global L*/
 //var map = L.map('map');
 
 //子供食堂のピンの画像を設定
 var ccIcon = L.icon({
-    iconUrl: 'img/gohan.png', 
+    iconUrl: 'img/gohan.png',
     iconRetinaUrl: 'img/gohan.png',
     iconSize: [40, 40],
     iconAnchor: [12, 25],
@@ -11,7 +23,7 @@ var ccIcon = L.icon({
 
 //フードバンクのピンの画像を設定
 var fbIcon = L.icon({
-    iconUrl: 'img/foodbank.png', 
+    iconUrl: 'img/foodbank.png',
     iconRetinaUrl: 'img/foodbank.png',
     iconSize: [40, 40],
     iconAnchor: [12, 25],
@@ -20,7 +32,7 @@ var fbIcon = L.icon({
 
 //食品ロス削減協力店のピンの画像を設定
 var lnIcon = L.icon({
-    iconUrl: 'img/loss-non.png', 
+    iconUrl: 'img/loss-non.png',
     iconRetinaUrl: 'img/loss-non.png',
     iconSize: [40, 40],
     iconAnchor: [12, 25],
@@ -72,7 +84,7 @@ var baseMaps = {
     "淡色地図" : pale,
     "白地図"   : blank,
     "OSM japan"  : osm
-};      
+};
 
 var overlayMaps = {
     "こども食堂" : childrencafeteria,

@@ -13,6 +13,12 @@
   "devDependencies": {
     "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0"
-  }
+    "eslint-plugin-compat": "^2.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "npx": "^9.7.1"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "ie >= 9"
+  ]
 }

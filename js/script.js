@@ -95,7 +95,7 @@ function createPopupHtml(attributes) {
   return (
     '<table border="1"><tr><th>名称</th><td><a href=' +
     url +
-    'target="_blank">' +
+    '" target="_blank">' +
     name +
     '</a></td></tr><tr><th>案内</th><td><a href="' +
     googleMapUrl +

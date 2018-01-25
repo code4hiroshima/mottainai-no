@@ -117,7 +117,7 @@ function createChilrdenCafeteriaMarker(
 // フードバンクのピンを追加 foodbank:fb
 var fbList /* FoobBank[] */ = [
   {
-    name: "あいあいねっと",
+    name: "あいあいねっと(フードバンク広島)",
     latitude: 34.524403,
     longitude: 132.50558,
     url: "http://www.aiainet.org/"

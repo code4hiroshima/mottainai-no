@@ -93,7 +93,7 @@ function createPopupHtml(attributes) {
   var googleMapUrl = createGoogleMapUrl(attributes);
   // TODO template literalを使いたい
   return (
-    '<table border="1"><tr><th>名称</th><td><a href=' +
+    '<table border="1"><tr><th>名称</th><td><a href="' +
     url +
     '" target="_blank">' +
     name +

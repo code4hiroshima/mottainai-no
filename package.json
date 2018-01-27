@@ -7,11 +7,13 @@
   "author": "14H-02390 <kou06ishi16@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "dev": "browser-sync start --server --files \"css/*.css\"",
     "lint": "eslint js/**.js",
     "lint:fix": "eslint --fix js/**.js"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
+    "browser-sync": "^2.23.6",
     "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-compat": "^2.1.0",

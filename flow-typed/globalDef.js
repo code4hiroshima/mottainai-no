@@ -1,5 +1,6 @@
 /* @flow */
 declare var L: Object;
+declare var $: Object;
 
 type Latitude = number; // 緯度
 type Longitude = number; // 経度

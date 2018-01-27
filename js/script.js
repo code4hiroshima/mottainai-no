@@ -10,14 +10,18 @@
 /* eslint prefer-destructuring: "off" */ // babelを利用しないと消せそうにない
 /* eslint spaced-comment: "off" */ // flowの型定義とコードフォーマッターが競合する
 /* eslint prefer-template: "off" */ // babelを利用しないとtemplate literal が利用できない
+/* eslint prefer-arrow-function: "off" */ // IEはarrow function使えない
+/* eslint prefer-arrow-callback: "off" */ // IEはarrow function使えない
+/* eslint no-console: "off" */ // IE9以上だし、ビルドツールないので、エラーを出力するのに利用する
 /* global L */
+/* global $ */
 // var map = L.map('map');
 
 // 表示項目情報
-const items = {
-  'kodomoSyokudo': {
-    'layer': L.layerGroup(),
-    'icon': L.icon({
+var items = {
+  kodomoSyokudo: {
+    layer: L.layerGroup(),
+    icon: L.icon({
       iconUrl: "img/gohan.png",
       iconRetinaUrl: "img/gohan.png",
       iconSize: [40, 40],
@@ -25,9 +29,9 @@ const items = {
       popupAnchor: [0, 0]
     })
   },
-  'foodBank': {
-    'layer': L.layerGroup(),
-    'icon': L.icon({
+  foodBank: {
+    layer: L.layerGroup(),
+    icon: L.icon({
       iconUrl: "img/foodbank.png",
       iconRetinaUrl: "img/foodbank.png",
       iconSize: [40, 40],
@@ -35,9 +39,9 @@ const items = {
       popupAnchor: [0, 0]
     })
   },
-  'lossNon': {
-    'layer': L.layerGroup(),
-    'icon': L.icon({
+  lossNon: {
+    layer: L.layerGroup(),
+    icon: L.icon({
       iconUrl: "img/loss-non.png",
       iconRetinaUrl: "img/loss-non.png",
       iconSize: [40, 40],
@@ -45,7 +49,7 @@ const items = {
       popupAnchor: [0, 0]
     })
   }
-}
+};
 
 function createMarker(attributes) {
   var latitude = attributes.latitude;
@@ -95,41 +99,27 @@ function createMarkerItem(spot, type) {
 
 function createLayerGroup(list, type) {
   return L.layerGroup(
-    list.map(function(spot){
+    list.map(function createMakerWithType(spot) {
       return createMarkerItem(spot, type);
     })
   );
 }
 
-function getItemList(dataType) {
-  console.log(dataType);
+function getItemList(aDataType, map) {
   $.ajax({
-    type: 'POST',
-    url: 'https://qopkh74g90.execute-api.us-east-1.amazonaws.com/v1/mottainai-no',
-    contentType: 'application/json',
-    dataType: 'json',
-    data: { 'dataType': dataType }
-  }).then(
-    function(result) {
-      items[dataType].layer = createLayerGroup(result, dataType);
-      map.addLayer(items[dataType].layer)
-    },
-    function(error) {
-      console.log(error);
-      return;
-    }
-  );
+    type: "POST",
+    url:
+      "https://qopkh74g90.execute-api.us-east-1.amazonaws.com/v1/mottainai-no",
+    contentType: "application/json",
+    dataType: "json",
+    data: { dataType: aDataType }
+  }).then(function createGetItemListCallback(result) {
+    items[aDataType].layer = createLayerGroup(result, aDataType);
+    map.addLayer(items[aDataType].layer);
+  }, console.log);
 }
 
-// 子ども食堂のレイヤ
-getItemList('kodomoSyokudo');
-
-// フードバンクのレイヤ
-getItemList('foodBank');
-
-// 食品ロス削減協力店のレイヤ
-getItemList('lossNon');
-
+/* 表示しないため、コメントアウト
 var pale = L.tileLayer(
   "http://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",
   {
@@ -146,6 +136,7 @@ var blank = L.tileLayer(
       "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>国土地理院</a>"
   }
 );
+*/
 var osm = L.tileLayer("http://tile.openstreetmap.jp/{z}/{x}/{y}.png", {
   id: "osmmap",
   attribution:
@@ -153,21 +144,52 @@ var osm = L.tileLayer("http://tile.openstreetmap.jp/{z}/{x}/{y}.png", {
 });
 
 var map = L.map("map", {
-  layers: [osm, items.kodomoSyokudo.layer, items.foodBank.layer, items.lossNon.layer]
+  layers: [
+    osm,
+    items.kodomoSyokudo.layer,
+    items.foodBank.layer,
+    items.lossNon.layer
+  ]
 });
 
 var baseMaps = {
   // 淡色地図: pale,
   // 白地図: blank,
-  "OpenStreetMap": osm
+  OpenStreetMap: osm
 };
 
-var overlayMaps = {
-  'こども食堂': items.kodomoSyokudo.layer,
-  'フードバンク': items.foodBank.layer,
-  '食品ロス削減協力店': items.lossNon.layer
-};
+var layerConfig = [
+  {
+    name: "子供食堂",
+    id: "kodomoSyokudo"
+  },
+  {
+    name: "フードバンク",
+    id: "foodBank"
+  },
+  {
+    name: "食品ロス削減協力",
+    id: "lossNon"
+  }
+];
 
-L.control.layers(baseMaps, overlayMaps).addTo(map);
+function createOverlayMaps(layers, item) {
+  layers.reduce(function reducer(acc, config) {
+    acc[config.name] = item[config.id].layer;
+    return acc;
+  }, {});
+}
+var overlayMaps = createOverlayMaps(layerConfig, items);
 
 map.setView([34.395247, 132.457659], 12);
+
+// 子ども食堂のレイヤの追加
+getItemList("kodomoSyokudo", map);
+
+// フードバンクのレイヤの追加
+getItemList("foodBank", map);
+
+// 食品ロス削減協力店のレイヤの追加
+getItemList("lossNon", map);
+
+L.control.layers(baseMaps, overlayMaps).addTo(map);

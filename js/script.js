@@ -13,58 +13,39 @@
 /* global L */
 // var map = L.map('map');
 
-// 子供食堂のピンの画像を設定
-var ccIcon = L.icon({
-  iconUrl: "img/gohan.png",
-  iconRetinaUrl: "img/gohan.png",
-  iconSize: [40, 40],
-  iconAnchor: [12, 25],
-  popupAnchor: [0, 0]
-});
-
-// フードバンクのピンの画像を設定
-var fbIcon = L.icon({
-  iconUrl: "img/foodbank.png",
-  iconRetinaUrl: "img/foodbank.png",
-  iconSize: [40, 40],
-  iconAnchor: [12, 25],
-  popupAnchor: [0, 0]
-});
-
-// 食品ロス削減協力店のピンの画像を設定
-var lnIcon = L.icon({
-  iconUrl: "img/loss-non.png",
-  iconRetinaUrl: "img/loss-non.png",
-  iconSize: [40, 40],
-  iconAnchor: [12, 25],
-  popupAnchor: [0, 0]
-});
-
-// 子ども食堂のピンを追加 childrencafeteria:cc
-// var cc1 = L.marker([34.392487, 132.475126], { icon: ccIcon }).bindPopup('<a href="https://www.facebook.com/tunago.p/" target="_blank">青い鳥</a><br><a href="https://maps.google.co.jp/maps?ll=34.392487,132.475126&f=d" target="_blank">ここまでの経路</a>'),
-// cc2 = L.marker([34.361050, 132.463745], { icon: ccIcon }).bindPopup('<a href="https://www.facebook.com/kururi2093/" target="_blank">くるり食堂</a><br><a href="https://maps.google.co.jp/maps?ll=34.361015,132.463743&f=d" target="_blank">ここまでの経路</a>'),
-// cc3 = L.marker([34.385509, 132.452631], { icon: ccIcon }).bindPopup('<a href="https://hiroshimaywca.jimdo.com/" target="_blank">わいわい食堂</a><br><a href="https://maps.google.co.jp/maps?ll=34.385509,132.452631&f=d" target="_blank">ここまでの経路</a>');
-
-var ccList /*: ChildrenCafeteria[] */ = [
-  {
-    name: "青い鳥",
-    latitude: 34.392487,
-    longitude: 132.475126,
-    url: "https://www.facebook.com/tunago.p/"
+// 表示項目情報
+const items = {
+  'kodomoSyokudo': {
+    'layer': L.layerGroup(),
+    'icon': L.icon({
+      iconUrl: "img/gohan.png",
+      iconRetinaUrl: "img/gohan.png",
+      iconSize: [40, 40],
+      iconAnchor: [12, 25],
+      popupAnchor: [0, 0]
+    })
   },
-  {
-    name: "くるり食堂",
-    latitude: 34.36105,
-    longitude: 132.463745,
-    url: "https://www.facebook.com/kururi2093/"
+  'foodBank': {
+    'layer': L.layerGroup(),
+    'icon': L.icon({
+      iconUrl: "img/foodbank.png",
+      iconRetinaUrl: "img/foodbank.png",
+      iconSize: [40, 40],
+      iconAnchor: [12, 25],
+      popupAnchor: [0, 0]
+    })
   },
-  {
-    name: "わいわい食堂",
-    latitude: 34.385509,
-    longitude: 132.452631,
-    url: "https://hiroshimaywca.jimdo.com/"
+  'lossNon': {
+    'layer': L.layerGroup(),
+    'icon': L.icon({
+      iconUrl: "img/loss-non.png",
+      iconRetinaUrl: "img/loss-non.png",
+      iconSize: [40, 40],
+      iconAnchor: [12, 25],
+      popupAnchor: [0, 0]
+    })
   }
-];
+}
 
 function createMarker(attributes) {
   var latitude = attributes.latitude;
@@ -103,63 +84,51 @@ function createPopupHtml(attributes) {
   );
 }
 
-function createChilrdenCafeteriaMarker(
-  cc /*: ChildrenCafeteria */
-) /*: Marker */ {
+function createMarkerItem(spot, type) {
   return createMarker({
-    icon: ccIcon,
-    latitude: cc.latitude,
-    longitude: cc.longitude,
-    popupHtml: createPopupHtml(cc)
+    icon: items[type].icon,
+    latitude: spot.latitude,
+    longitude: spot.longitude,
+    popupHtml: createPopupHtml(spot)
   });
 }
 
-// フードバンクのピンを追加 foodbank:fb
-var fbList /* FoobBank[] */ = [
-  {
-    name: "あいあいねっと(フードバンク広島)",
-    latitude: 34.524403,
-    longitude: 132.50558,
-    url: "http://www.aiainet.org/"
-  }
-];
-
-function createFoodBankMarker(fb /*: FoodBank */) /*: Marker */ {
-  return createMarker({
-    icon: fbIcon,
-    latitude: fb.latitude,
-    longitude: fb.longitude,
-    popupHtml: createPopupHtml(fb)
-  });
+function createLayerGroup(list, type) {
+  return L.layerGroup(
+    list.map(function(spot){
+      return createMarkerItem(spot, type);
+    })
+  );
 }
 
-// 食品ロス削減協力店のピンを追加 lossnon:ln
-var lnList = [
-  {
-    name: "イオン宇品店",
-    latitude: 34.362869,
-    longitude: 132.468328,
-    url: "http://www.city.hiroshima.lg.jp/www/contents/1498549753659/index.html"
-  }
-];
-
-function createLossNonMarker(ln /*: LossNon */) /*: Marker */ {
-  return createMarker({
-    icon: lnIcon,
-    latitude: ln.latitude,
-    longitude: ln.longitude,
-    popupHtml: createPopupHtml(ln)
-  });
+function getItemList(dataType) {
+  console.log(dataType);
+  $.ajax({
+    type: 'POST',
+    url: 'https://qopkh74g90.execute-api.us-east-1.amazonaws.com/v1/mottainai-no',
+    contentType: 'application/json',
+    dataType: 'json',
+    data: { 'dataType': dataType }
+  }).then(
+    function(result) {
+      items[dataType].layer = createLayerGroup(result, dataType);
+      map.addLayer(items[dataType].layer)
+    },
+    function(error) {
+      console.log(error);
+      return;
+    }
+  );
 }
 
 // 子ども食堂のレイヤ
-var childrencafeteria = L.layerGroup(ccList.map(createChilrdenCafeteriaMarker));
+getItemList('kodomoSyokudo');
 
 // フードバンクのレイヤ
-var foodbank = L.layerGroup(fbList.map(createFoodBankMarker));
+getItemList('foodBank');
 
 // 食品ロス削減協力店のレイヤ
-var lossnon = L.layerGroup(lnList.map(createLossNonMarker));
+getItemList('lossNon');
 
 var pale = L.tileLayer(
   "http://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",
@@ -184,19 +153,19 @@ var osm = L.tileLayer("http://tile.openstreetmap.jp/{z}/{x}/{y}.png", {
 });
 
 var map = L.map("map", {
-  layers: [osm, childrencafeteria, foodbank, lossnon]
+  layers: [osm, items.kodomoSyokudo.layer, items.foodBank.layer, items.lossNon.layer]
 });
 
 var baseMaps = {
-  淡色地図: pale,
-  白地図: blank,
-  "OSM japan": osm
+  // 淡色地図: pale,
+  // 白地図: blank,
+  "OpenStreetMap": osm
 };
 
 var overlayMaps = {
-  こども食堂: childrencafeteria,
-  フードバンク: foodbank,
-  食品ロス削減協力店: lossnon
+  'こども食堂': items.kodomoSyokudo.layer,
+  'フードバンク': items.foodBank.layer,
+  '食品ロス削減協力店': items.lossNon.layer
 };
 
 L.control.layers(baseMaps, overlayMaps).addTo(map);

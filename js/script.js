@@ -160,7 +160,7 @@ var baseMaps = {
 
 var layerConfig = [
   {
-    name: "子供食堂",
+    name: "こども食堂",
     id: "kodomoSyokudo"
   },
   {

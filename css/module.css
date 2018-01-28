@@ -90,16 +90,16 @@
 }
 
 .leaflet-control-pan-up {
-	background-image: url(img/687c563932ebfa89cd6baeb352330805.png);
+	background-image: url(../images/687c563932ebfa89cd6baeb352330805.png);
 }
 .leaflet-control-pan-left {
-	background-image: url(img/2f46ace0b72c107bbcd70d864864be39.png);
+	background-image: url(../images/2f46ace0b72c107bbcd70d864864be39.png);
 }
 .leaflet-control-pan-right {
-	background-image: url(img/33d75dc55ca5747737cfb68ddd276de0.png);
+	background-image: url(../images/33d75dc55ca5747737cfb68ddd276de0.png);
 }
 .leaflet-control-pan-down {
-	background-image: url(img/a819c898affad92f39a916e0ceb62475.png);
+	background-image: url(../images/a819c898affad92f39a916e0ceb62475.png);
 }
 
 /****** Touch Alterations ******/
@@ -486,12 +486,12 @@
 	border-radius: 5px;
 	}
 .leaflet-control-layers-toggle {
-	background-image: url(img/a6137456ed160d7606981aa57c559898.png);
+	background-image: url(../images/a6137456ed160d7606981aa57c559898.png);
 	width: 36px;
 	height: 36px;
 	}
 .leaflet-retina .leaflet-control-layers-toggle {
-	background-image: url(img/4f0283c6ce28e888000e978e537a6a56.png);
+	background-image: url(../images/4f0283c6ce28e888000e978e537a6a56.png);
 	background-size: 26px 26px;
 	}
 .leaflet-touch .leaflet-control-layers-toggle {
@@ -532,7 +532,7 @@
 
 /* Default icon URLs */
 .leaflet-default-icon-path {
-	background-image: url(img/2273e3d8ad9264b7daa5bdbf8e6b47f8.png);
+	background-image: url(../images/2273e3d8ad9264b7daa5bdbf8e6b47f8.png);
 	}
 
 

@@ -18,6 +18,9 @@
 import L from "leaflet";
 import PanControl from "leaflet.pancontrol";
 
+import "leaflet.pancontrol/src/L.Control.Pan.css";
+import "leaflet/dist/leaflet.css";
+
 /**
  * Map設定
  */

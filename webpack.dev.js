@@ -1,13 +1,19 @@
-/* eslint comma-dangle: ["error", "never"] */
-/* eslint quotes: ["error", "double"] */
-const merge = require("webpack-merge");
-const common = require("./webpack.common.js");
+const merge = require('webpack-merge');
+const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
-  devtool: "inline-source-map",
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
+  devtool: 'inline-source-map',
   devServer: {
-    contentBase: ".",
+    contentBase: '.',
     compress: true,
-    port: 10980
-  }
+    port: 10980,
+  },
 });

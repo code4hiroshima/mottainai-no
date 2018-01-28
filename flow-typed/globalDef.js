@@ -15,3 +15,17 @@ export type Spot = {
 export type ChildrenCafeteria = Spot;
 export type FoodBank = Spot;
 export type LossNon = Spot;
+
+export type IconConfig = {
+  iconUrl: string,
+  iconRetinaUrl: string,
+  iconSize: number[],
+  iconAnchor: number[],
+  popupAnchor: number[]
+};
+
+export type OverlayConfig = {
+  key: string,
+  name: string,
+  icon: IconConfig
+};

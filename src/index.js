@@ -13,8 +13,10 @@
 /* eslint prefer-arrow-function: "off" */ // IEはarrow function使えない
 /* eslint prefer-arrow-callback: "off" */ // IEはarrow function使えない
 /* eslint no-console: "off" */ // IE9以上だし、ビルドツールないので、エラーを出力するのに利用する
-/* global L */
 /* global $ */
+
+import L from "leaflet";
+import PanControl from "leaflet.pancontrol";
 
 /**
  * Map設定
@@ -231,7 +233,7 @@ var map = L.map("map", {
   layers: baseLayers.concat(overlayLayers)
 });
 
-L.control.pan().addTo(map);
+new PanControl().addTo(map);
 L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 /* それぞれのアイコンのインスタンスをとりだしやすいように辞書にする */

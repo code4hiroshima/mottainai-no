@@ -30,5 +30,9 @@
   "browserslist": [
     "last 2 versions",
     "ie >= 9"
-  ]
+  ],
+  "dependencies": {
+    "leaflet": "^1.2.0",
+    "leaflet.pancontrol": "^1.0.0"
+  }
 }

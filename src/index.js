@@ -1,17 +1,11 @@
 /* @flow */
-/* eslint no-var: "off" */
 /* eslint comma-dangle: "off" */
 /* eslint indent: "off" */
 /* eslint quote-props: "off" */
 /* eslint key-spacing: "off" */
 /* eslint quotes: "off" */
 /* eslint function-paren-newline: "off" */ // コードフォーマッターとeslintが競合する
-/* eslint vars-on-top: "off" */ // ESModuleが使えないと消しにくい
-/* eslint prefer-destructuring: "off" */ // babelを利用しないと消せそうにない
 /* eslint spaced-comment: "off" */ // flowの型定義とコードフォーマッターが競合する
-/* eslint prefer-template: "off" */ // babelを利用しないとtemplate literal が利用できない
-/* eslint prefer-arrow-function: "off" */ // IEはarrow function使えない
-/* eslint prefer-arrow-callback: "off" */ // IEはarrow function使えない
 /* eslint no-console: "off" */ // IE9以上だし、ビルドツールないので、エラーを出力するのに利用する
 /* global $ */
 
@@ -24,7 +18,7 @@ import "leaflet/dist/leaflet.css";
 /**
  * Map設定
  */
-var mapConfig = {
+const mapConfig = {
   center: [34.395247, 132.457659],
   zoom: 12
 };
@@ -33,14 +27,14 @@ var mapConfig = {
  * BaseLayer設定
  */
 /* 表示しないため、コメントアウト
-var pale = {
+const pale = {
   name: "淡色地図"
   tileUrl: "http://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",
   id: "palemap",
   attribution:
     "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>国土地理院</a>"
 };
-var blank = {
+const blank = {
   name: "白地図",
   OpenStreetMap: osm
   tileUrl, "http://cyberjapandata.gsi.go.jp/xyz/blank/{z}/{x}/{y}.png",
@@ -49,7 +43,7 @@ var blank = {
     "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>国土地理院</a>"
 );
 */
-var osm = {
+const osm = {
   name: "OpenStreetMap",
   tileUrl: "http://tile.openstreetmap.jp/{z}/{x}/{y}.png",
   id: "osmmap",
@@ -60,7 +54,7 @@ var osm = {
 /*
  * Overlayレイヤーの設定
  */
-var baseLayerConfigList = [
+const baseLayerConfigList = [
   /*
   pale,
   blank,
@@ -68,7 +62,7 @@ var baseLayerConfigList = [
   osm
 ];
 
-var kodomoSyokudo = {
+const kodomoSyokudo = {
   key: "kodomoSyokudo",
   name: "こども食堂",
   icon: {
@@ -80,7 +74,7 @@ var kodomoSyokudo = {
   }
 };
 
-var foodBank = {
+const foodBank = {
   key: "foodBank",
   name: "フードバンク",
   icon: {
@@ -92,7 +86,7 @@ var foodBank = {
   }
 };
 
-var lossNon = {
+const lossNon = {
   key: "lossNon",
   name: "食品ロス削減協力",
   icon: {
@@ -104,7 +98,7 @@ var lossNon = {
   }
 };
 
-var overlayConfigList /*: OverlayConfig[] */ = [
+const overlayConfigList /*: OverlayConfig[] */ = [
   kodomoSyokudo,
   foodBank,
   lossNon
@@ -114,59 +108,57 @@ var overlayConfigList /*: OverlayConfig[] */ = [
  * Spot情報からMarkerを作成する
  */
 function createMarker(attributes) {
-  var latitude = attributes.latitude;
-  var longitude = attributes.longitude;
-  var aIcon = attributes.icon; // iconにするとフォーマッタにes6形式にされてしまう
-  var popupHtml = attributes.popupHtml;
-  return L.marker([latitude, longitude], { icon: aIcon }).bindPopup(popupHtml);
+  const { latitude, longitude, icon, popupHtml } = attributes;
+  return L.marker([latitude, longitude], { icon }).bindPopup(popupHtml);
 }
 
 /**
  * Google Mapのurlを作成する
  */
 function createGoogleMapUrl(attributes) {
-  var latitude = attributes.latitude;
-  var longitude = attributes.longitude;
-  // TODO template literalを使いたい
-  return (
-    "https://maps.google.co.jp/maps?q=" +
-    latitude +
-    "," +
-    longitude +
-    "&iwloc=J"
-  );
+  const { latitude, longitude } = attributes;
+  return `https://maps.google.co.jp/maps?q=${latitude},${longitude}&iwloc=J`;
 }
 
 /**
  * PopupするHTMLを作成する
  */
 function createPopupHtml(attributes) {
-  var url = attributes.url;
-  var name = attributes.name;
-  var googleMapUrl = createGoogleMapUrl(attributes);
-  // TODO template literalを使いたい
-  return (
-    '<table border="1"><tr><th>名称</th><td><a href="' +
-    url +
-    '" target="_blank">' +
-    name +
-    '</a></td></tr><tr><th>案内</th><td><a href="' +
-    googleMapUrl +
-    '" target="_blank">ここまでの経路</a></td></tr></table>'
-  );
+  const { url, name } = attributes;
+  const googleMapUrl = createGoogleMapUrl(attributes);
+  return `
+  <table border="1">
+    <tr>
+      <th>名称</th>
+      <td>
+        <a href="${url}" target="_blank">
+          ${name}
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <th>案内</th>
+      <td>
+        <a href="${googleMapUrl}" target="_blank">
+          ここまでの経路
+        </a>
+      </td>
+    </tr>
+  </table>
+  `;
 }
 
 /**
  * 外部APIを実行して、Spotの一覧を取得する
  */
-function getSpotList(aDataType) {
+function getSpotList(dataType) {
   return $.ajax({
     type: "POST",
     url:
       "https://qopkh74g90.execute-api.us-east-1.amazonaws.com/v1/mottainai-no",
     contentType: "application/json",
     dataType: "json",
-    data: { dataType: aDataType }
+    data: { dataType }
   });
 }
 
@@ -181,8 +173,9 @@ function createTileLayer(tileLayerConfig) {
  * configからインスタンスを管理する要素を作成する
  */
 function createTileLayerItem(tileLayerConfig) {
+  const { name } = tileLayerConfig;
   return {
-    name: tileLayerConfig.name,
+    name,
     layer: createTileLayer(tileLayerConfig)
   };
 }
@@ -191,9 +184,10 @@ function createTileLayerItem(tileLayerConfig) {
  * configからOverlayLayerを管理する要素を作成する
  */
 function createOverlayLayerItem(overlayConfig) {
+  const { name, key } = overlayConfig;
   return {
-    name: overlayConfig.name,
-    key: overlayConfig.key,
+    name,
+    key,
     layer: L.layerGroup()
   };
 }
@@ -209,7 +203,8 @@ function extractLayer(object) {
  * インスタンス管理をする要素からLeafletのControlsに渡す名前とlayerの辞書を作成するreducer
  */
 function toMapReducer(acc, layerItem) {
-  acc[layerItem.name] = layerItem.layer;
+  const { name, layer } = layerItem;
+  acc[name] = layer;
   return acc;
 }
 
@@ -217,41 +212,38 @@ function toMapReducer(acc, layerItem) {
  * インスタンス管理をする要素から取得しやすいようにユニークなキーとlayerの辞書を作成するreducer
  */
 function toContainerReducer(acc, layerItem) {
-  acc[layerItem.key] = layerItem.layer;
+  const { key, layer } = layerItem;
+  acc[key] = layer;
   return acc;
 }
 
-var baseLayerList = baseLayerConfigList.map(createTileLayerItem);
-var baseLayers = baseLayerList.map(extractLayer);
-var baseMaps = baseLayerList.reduce(toMapReducer, {});
+const baseLayerList = baseLayerConfigList.map(createTileLayerItem);
+const baseLayers = baseLayerList.map(extractLayer);
+const baseMaps = baseLayerList.reduce(toMapReducer, {});
 
-var overlayLayerList = overlayConfigList.map(createOverlayLayerItem);
-var overlayLayers = overlayLayerList.map(extractLayer);
-var overlayMaps = overlayLayerList.reduce(toMapReducer, {});
-var overlayCantainer = overlayLayerList.reduce(toContainerReducer, {});
+const overlayLayerList = overlayConfigList.map(createOverlayLayerItem);
+const overlayLayers = overlayLayerList.map(extractLayer);
+const overlayMaps = overlayLayerList.reduce(toMapReducer, {});
+const overlayCantainer = overlayLayerList.reduce(toContainerReducer, {});
 
-var map = L.map("map", {
+const map = L.map("map", {
   center: mapConfig.center,
   zoom: mapConfig.zoom,
-  layers: baseLayers.concat(overlayLayers)
+  layers: [...baseLayers, ...overlayLayers]
 });
 
 new PanControl().addTo(map);
 L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 /* それぞれのアイコンのインスタンスをとりだしやすいように辞書にする */
-var iconContainer /*: Object */ = overlayConfigList.reduce(
-  function createIconReducer(
-    acc /* Object */,
-    overlayConfig /*: OverlayConfig */
-  ) {
-    var icon = overlayConfig.icon;
-    var key = overlayConfig.key;
-    acc[key] = L.icon(icon);
-    return acc;
-  },
-  {}
-);
+const iconContainer /*: Object */ = overlayConfigList.reduce((
+  acc /* Object */,
+  overlayConfig /*: OverlayConfig */
+) => {
+  const { icon, key } = overlayConfig;
+  acc[key] = L.icon(icon);
+  return acc;
+}, {});
 
 /**
  * レイヤーにマークを追加する関数を生成する関数
@@ -259,11 +251,12 @@ var iconContainer /*: Object */ = overlayConfigList.reduce(
 function appendMarkerCreator(layer, dataType) {
   return function appendMarker(spots) {
     layer.clearLayers();
-    spots.map(function mapper2(spot) {
+    spots.map(spot => {
+      const { latitude, longitude } = spot;
       createMarker({
         icon: iconContainer[dataType],
-        latitude: spot.latitude,
-        longitude: spot.longitude,
+        latitude,
+        longitude,
         popupHtml: createPopupHtml(spot)
       }).addTo(layer);
       return spot;
@@ -272,11 +265,11 @@ function appendMarkerCreator(layer, dataType) {
 }
 
 /* 各レイヤーの情報を取得し、表示を行う */
-overlayConfigList.map(function mapper(overlayConfig /*: OverlayConfig */) {
-  var key = overlayConfig.key;
-  var layer = overlayCantainer[key];
-  var dataType = key;
-  var appendMarker = appendMarkerCreator(layer, dataType);
+overlayConfigList.map((overlayConfig /*: OverlayConfig */) => {
+  const key = overlayConfig.key;
+  const layer = overlayCantainer[key];
+  const dataType = key;
+  const appendMarker = appendMarkerCreator(layer, dataType);
   return getSpotList(dataType)
     .then(appendMarker)
     .catch(console.log);

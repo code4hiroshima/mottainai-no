@@ -231,6 +231,7 @@ var map = L.map("map", {
   layers: baseLayers.concat(overlayLayers)
 });
 
+L.control.pan().addTo(map);
 L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 /* それぞれのアイコンのインスタンスをとりだしやすいように辞書にする */

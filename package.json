@@ -14,7 +14,10 @@
     "lint:fix": "eslint --fix js/**.js"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
     "browser-sync": "^2.23.6",
     "css-loader": "^0.28.9",
     "eslint": "^4.16.0",
